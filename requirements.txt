@@ -1,4 +1,5 @@
 streamlit-pdf-viewer
 streamlit
 psycopg2-binary
+pypdf                   ❌
 
