@@ -1,10 +1,10 @@
 import json
 from collections import defaultdict
 from typing import List, Dict, Any
-from LIFI.courses_data_lifi import (
+from files.courses_data_lifi import (
     base_lifi_courses, mod_lifi_courses, real_lifi_courses, per_lifi_courses
 )
-from LQFB.courses_data_lqfb import (
+from files.courses_data_lqfb import (
     base_lqfb_courses, mod_lqfb_courses, per_lqfb_courses
 )
 
