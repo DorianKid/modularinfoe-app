@@ -1,39 +1,73 @@
-# forum/answers.py
 import streamlit as st
 from forum.db import get_conn
 
-def add_answer(question_id: int):
-    body = st.text_area(
-        "Respuesta (LaTeX permitido)",
-        key=f"answer_{question_id}"
-    )
+def answers_section(question_id: int):
 
-    if st.button("Responder", key=f"btn_{question_id}"):
-        if not body:
-            st.warning("La respuesta está vacía")
-            return
+    with st.expander("💡 Ver respuestas / agregar solución"):
 
+        # --- listar respuestas ---
         conn = get_conn()
         c = conn.cursor()
-        c.execute(
-            "INSERT INTO answers (question_id, body) VALUES (?, ?)",
-            (question_id, body)
-        )
-        conn.commit()
+        c.execute("""
+            SELECT id, body, likes, dislikes
+            FROM answers
+            WHERE question_id = ?
+            ORDER BY likes DESC
+        """, (question_id,))
+        answers = c.fetchall()
         conn.close()
-        st.success("Respuesta enviada")
 
-def list_answers(question_id: int):
+        if answers:
+            for aid, body, likes, dislikes in answers:
+                with st.container(border=True):
+                    st.markdown(body, unsafe_allow_html=True)
+
+                    col1, col2, col3 = st.columns([1, 1, 8])
+
+                    if col1.button("👍", key=f"like_{aid}"):
+                        vote(aid, "likes")
+                        st.rerun()
+
+                    if col2.button("👎", key=f"dislike_{aid}"):
+                        vote(aid, "dislikes")
+                        st.rerun()
+
+                    col3.markdown(f"👍 {likes} | 👎 {dislikes}")
+
+        else:
+            st.info("Aún no hay respuestas")
+
+        # --- agregar respuesta ---
+        st.markdown("#### ✍️ Agregar respuesta")
+
+        new_answer = st.text_area(
+            "Respuesta (texto + LaTeX)",
+            key=f"ans_{question_id}",
+            placeholder="Explica el procedimiento y usa $$ $$ para ecuaciones"
+        )
+
+        if st.button("Responder", key=f"btn_ans_{question_id}"):
+            if not new_answer.strip():
+                st.warning("La respuesta no puede estar vacía")
+                return
+
+            conn = get_conn()
+            c = conn.cursor()
+            c.execute(
+                "INSERT INTO answers (question_id, body) VALUES (?, ?)",
+                (question_id, new_answer.strip())
+            )
+            conn.commit()
+            conn.close()
+            st.success("Respuesta agregada")
+            st.rerun()
+
+def vote(answer_id: int, field: str):
     conn = get_conn()
     c = conn.cursor()
     c.execute(
-        "SELECT body FROM answers WHERE question_id = ?",
-        (question_id,)
+        f"UPDATE answers SET {field} = {field} + 1 WHERE id = ?",
+        (answer_id,)
     )
-    rows = c.fetchall()
+    conn.commit()
     conn.close()
-
-    if rows:
-        st.markdown("**Respuestas:**")
-        for (body,) in rows:
-            st.markdown(f"$$\n{body}\n$$", unsafe_allow_html=True)
