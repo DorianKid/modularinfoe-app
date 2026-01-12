@@ -1,4 +1,4 @@
-# Modulares Básicas — UDG (Web App)
+# Modular Infoe — (Web App)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 [![Made with: Streamlit](https://img.shields.io/badge/Made%20with-Streamlit-blue)](https://streamlit.io/)
@@ -164,4 +164,5 @@ Este proyecto está bajo la **Licencia MIT**. Consulta [`LICENSE`](./LICENSE).
 
 - El objetivo del proyecto es **informar** a alumnas/os sobre Modulares Básicas y ofrecer una **herramienta práctica** para planear la trayectoria académica.
 - Si deseas desplegarlo, puedes usar **Streamlit Community Cloud** o cualquier hosting que soporte apps Python/Streamlit.
+
 
