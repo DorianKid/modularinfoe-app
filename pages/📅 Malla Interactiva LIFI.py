@@ -3,7 +3,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import importlib, files.html_grid as html_grid
 from files.html_grid import (HTML_LIFI_N, HTML_LIFI_M, HTML_LIFI_R, HTML_LIFI_P)
-from LIFI.courses_data_lifi import mod_lifi_courses
+from files.courses_data_lifi import mod_lifi_courses
 
 # Configuracion para el tabs
 # 👇 Inyecta estilos ANTES de crear los tabs
