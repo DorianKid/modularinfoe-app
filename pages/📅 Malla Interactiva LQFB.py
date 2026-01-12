@@ -3,7 +3,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import importlib, files.html_grid as html_grid
 from files.html_grid import (HTML_LQFB_N, HTML_LQFB_M, HTML_LQFB_P)
-from LQFB.courses_data_lqfb import mod_lqfb_courses
+from files.courses_data_lqfb import mod_lqfb_courses
 
 # Configuracion para el tabs
 # 👇 Inyecta estilos ANTES de crear los tabs
