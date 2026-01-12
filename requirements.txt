@@ -1,9 +1,4 @@
 streamlit-pdf-viewer
 streamlit
-langchain==0.1.20
-langchain-community
-sentence-transformers
-faiss-cpu
-pypdf
-transformers
-torch
+psycopg2-binary
+
