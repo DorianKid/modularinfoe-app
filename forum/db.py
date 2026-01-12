@@ -26,6 +26,8 @@ def init_db():
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         question_id INTEGER,
         body TEXT NOT NULL,
+        likes INTEGER DEFAULT 0,
+        dislikes INTEGER DEFAULT 0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY(question_id) REFERENCES questions(id)
     )
@@ -33,3 +35,4 @@ def init_db():
 
     conn.commit()
     conn.close()
+
