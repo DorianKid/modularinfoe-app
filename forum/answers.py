@@ -11,7 +11,7 @@ def answers_section(question_id: int):
         c.execute("""
             SELECT id, body, likes, dislikes
             FROM answers
-            WHERE question_id = ?
+            WHERE question_id = %s
             ORDER BY likes DESC
         """, (question_id,))
         answers = c.fetchall()
@@ -54,7 +54,7 @@ def answers_section(question_id: int):
             conn = get_conn()
             c = conn.cursor()
             c.execute(
-                "INSERT INTO answers (question_id, body) VALUES (?, ?)",
+                "INSERT INTO answers (question_id, body) VALUES (%s, %s)",
                 (question_id, new_answer.strip())
             )
             conn.commit()
@@ -66,8 +66,9 @@ def vote(answer_id: int, field: str):
     conn = get_conn()
     c = conn.cursor()
     c.execute(
-        f"UPDATE answers SET {field} = {field} + 1 WHERE id = ?",
+        f"UPDATE answers SET {field} = {field} + 1 WHERE id = %s",
         (answer_id,)
     )
     conn.commit()
     conn.close()
+
