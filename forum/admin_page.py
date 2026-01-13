@@ -1,11 +1,12 @@
+# forum/admin_page.py
 import streamlit as st
+from forum.db import get_conn
 from forum.admin import (
     delete_question,
     delete_answer,
     accept_answer,
     update_question_area
 )
-from forum.db import get_conn
 
 def admin_page():
 
@@ -13,20 +14,18 @@ def admin_page():
     st.title("🛡️ Administración del Foro")
 
     st.warning(
-        "Esta página es solo para administración. "
+        "Página de administración oculta. "
         "No compartas esta URL."
     )
 
     conn = get_conn()
     c = conn.cursor()
-
     c.execute("""
         SELECT id, title, body, area
         FROM questions
         ORDER BY id DESC
     """)
     questions = c.fetchall()
-
     conn.close()
 
     for qid, title, body, area in questions:
@@ -34,7 +33,7 @@ def admin_page():
             st.markdown(f"### {title}")
             st.markdown(body, unsafe_allow_html=True)
 
-            st.markdown(f"**Área:** {area or 'Sin asignar'}")
+            st.caption(f"Área: {area or 'Sin asignar'}")
 
             new_area = st.text_input(
                 "Editar área",
