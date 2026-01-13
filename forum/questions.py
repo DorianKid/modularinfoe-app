@@ -6,7 +6,6 @@ def on_title_change():
         st.session_state.q_title.strip()
     )
 
-
 def create_question():
     st.subheader("📝 Nueva pregunta")
 
@@ -40,29 +39,31 @@ def create_question():
         if body.strip():
             st.markdown(body, unsafe_allow_html=True)
 
-    if st.button(
-        "📤 Publicar pregunta",
-        disabled=not st.session_state.title_ready
-    ):
-        conn = get_conn()
-        c = conn.cursor()
-        c.execute(
-            "INSERT INTO questions (title, body) VALUES (%s, %s)",
-            (
-                st.session_state.q_title.strip(),
-                body.strip()
+    c1,c2,c3 = st.columns([1,2,1])
+    with c2:
+        if st.button(
+            "📤 Publicar pregunta",
+            disabled=not st.session_state.title_ready
+        ):
+            conn = get_conn()
+            c = conn.cursor()
+            c.execute(
+                "INSERT INTO questions (title, body) VALUES (%s, %s)",
+                (
+                    st.session_state.q_title.strip(),
+                    body.strip()
+                )
             )
-        )
-        conn.commit()
-        conn.close()
-
-        # 🔥 RESET TOTAL
-        st.session_state.q_title = ""
-        st.session_state.q_body = ""
-        st.session_state.title_ready = False
-
-        st.success("Pregunta publicada correctamente")
-        st.rerun()
+            conn.commit()
+            conn.close()
+    
+            # 🔥 RESET TOTAL
+            st.session_state.q_title = ""
+            st.session_state.q_body = ""
+            st.session_state.title_ready = False
+    
+            st.success("Pregunta publicada correctamente")
+            st.rerun()
 
 def list_questions():
     st.subheader("📚 Preguntas del foro")
@@ -88,6 +89,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
