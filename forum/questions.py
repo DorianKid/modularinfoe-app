@@ -58,8 +58,8 @@ def create_question():
             conn.close()
     
             # 🔥 RESET TOTAL
-            st.session_state.q_title = ""
-            st.session_state.q_body = ""
+            del st.session_state["q_title"]
+            del st.session_state["q_body"]
             st.session_state.title_ready = False
     
             st.success("Pregunta publicada correctamente")
@@ -89,6 +89,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
