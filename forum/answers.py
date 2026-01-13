@@ -83,24 +83,43 @@ def answers_section(question_id: int):
                         st.markdown("<div class='vote-box'><div class='vote-inner'>", unsafe_allow_html=True)
                         
                         c1, c2 = st.columns(2)
-                        
+                                                
                         # 👍 Like
                         if aid in st.session_state.voted_answers:
-                            c1.button(f"👍 {likes}", disabled=True, key=f"l_{aid}")
+                            c1.button(
+                                f"👍 {likes}",
+                                disabled=True,
+                                key=f"l_{aid}",
+                                help="vote"
+                            )
                         else:
-                            if c1.button(f"👍 {likes}", key=f"l_{aid}"):
+                            if c1.button(
+                                f"👍 {likes}",
+                                key=f"l_{aid}",
+                                help="vote"
+                            ):
                                 vote(aid, "likes")
                                 st.session_state.voted_answers.add(aid)
                                 st.rerun()
                         
                         # 👎 Dislike
                         if aid in st.session_state.voted_answers:
-                            c2.button(f"👎 {dislikes}", disabled=True, key=f"d_{aid}")
+                            c2.button(
+                                f"👎 {dislikes}",
+                                disabled=True,
+                                key=f"d_{aid}",
+                                help="vote"
+                            )
                         else:
-                            if c2.button(f"👎 {dislikes}", key=f"d_{aid}"):
+                            if c2.button(
+                                f"👎 {dislikes}",
+                                key=f"d_{aid}",
+                                help="vote"
+                            ):
                                 vote(aid, "dislikes")
                                 st.session_state.voted_answers.add(aid)
                                 st.rerun()
+
                         
                         st.markdown("</div></div>", unsafe_allow_html=True)
 
@@ -164,4 +183,5 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
 
