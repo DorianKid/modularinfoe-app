@@ -15,7 +15,6 @@ def create_question():
     )
     
     title = st.text_input(
-        "",
         key="q_title",
         placeholder="Ejemplo: Ejercicio 15.2 de Mecánica (Resnick)"
     )
@@ -83,6 +82,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
