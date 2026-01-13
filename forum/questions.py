@@ -23,7 +23,7 @@ def create_question():
             "Pregunta (texto + LaTex)",
             key="q_body",
             height=220,
-            placeholder="Ejemplo: $$\int 2^{6x}$$ "
+            placeholder="Ejemplo: $$\int 2^{6x}$$ \n ¿Por qué \root{2} es irracional?"
         )
 
     with col2:
@@ -78,6 +78,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
