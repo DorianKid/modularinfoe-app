@@ -48,3 +48,29 @@ def create_question():
 
         st.success("Pregunta publicada correctamente")
         st.rerun()
+        
+def list_questions():
+    st.subheader("📚 Preguntas del foro")
+
+    conn = get_conn()
+    c = conn.cursor()
+    c.execute("""
+        SELECT id, title, body
+        FROM questions
+        ORDER BY id DESC
+    """)
+    questions = c.fetchall()
+    conn.close()
+
+    if not questions:
+        st.info("Aún no hay preguntas en el foro")
+        return
+
+    for qid, title, body in questions:
+        with st.container(border=True):
+            st.markdown(f"### {title}")
+            st.markdown(body, unsafe_allow_html=True)
+
+            from forum.answers import answers_section
+            answers_section(qid)
+
