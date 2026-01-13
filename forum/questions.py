@@ -22,12 +22,14 @@ def create_question():
             "Pregunta (LaTex)",
             key="q_body",
             height=180,
-            placeholder="Ejemplo: $$\int 2^{6x}$$ \n\n Ejemplo: ¿Por qué $$\sqrt{2}$$ es irracional?"
+            placeholder="Ejemplo: $$\int 2^{6x}$$ \n\nEjemplo: ¿Por qué $$\sqrt{2}$$ es irracional?"
         )
 
     with col2:
-        st.markdown("#### 👀 Vista previa")
-    
+        st.markdown(
+            "<h4 style='text-align: center;'>👀 Vista previa</h4>",
+            unsafe_allow_html=True
+        )    
         if body.strip():
             st.markdown(body, unsafe_allow_html=True)
 
@@ -77,6 +79,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
