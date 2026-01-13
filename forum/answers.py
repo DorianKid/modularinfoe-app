@@ -97,7 +97,7 @@ def answers_section(question_id: int):
             conn.close()
 
             # Reset
-            st.session_state[key] = ""
+            del st.session_state[key]
             st.success("Respuesta agregada")
             st.rerun()
 
@@ -111,3 +111,4 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
