@@ -9,46 +9,48 @@ def answers_section(question_id: int):
         SELECT id, body, likes, dislikes
         FROM answers
         WHERE question_id = %s
-        ORDER BY likes DESC
+        ORDER BY likes DESC, created_at ASC
     """, (question_id,))
     answers = c.fetchall()
     conn.close()
 
-    # --- Si hay respuestas, mostrarlas en expander ---
+    # --- Mostrar respuestas ---
     if answers:
         with st.expander(f"💡 Ver respuestas ({len(answers)})"):
             for aid, body, likes, dislikes in answers:
                 with st.container(border=True):
                     st.markdown(body, unsafe_allow_html=True)
 
-                    col1, col2, col3 = st.columns([1, 1, 8])
+                    col1, col2, col3 = st.columns([2, 2, 6])
 
-                    if col1.button("👍", key=f"like_{aid}"):
+                    if col1.button(f"👍 {likes}", key=f"like_{aid}"):
                         vote(aid, "likes")
                         st.rerun()
 
-                    if col2.button("👎", key=f"dislike_{aid}"):
+                    if col2.button(f"👎 {dislikes}", key=f"dislike_{aid}"):
                         vote(aid, "dislikes")
                         st.rerun()
-
-                    col3.markdown(f"👍 {likes} | 👎 {dislikes}")
 
     else:
         st.caption("Aún no hay respuestas para esta pregunta.")
 
-    # --- Siempre permitir agregar respuesta ---
+    # --- Agregar respuesta ---
     with st.expander("✍️ Agregar solución"):
+        key = f"ans_{question_id}"
+        st.session_state.setdefault(key, "")
+
         new_answer = st.text_area(
             "Respuesta (texto + LaTeX)",
-            key=f"ans_{question_id}",
-            placeholder="Usa $$ ... $$ para ecuaciones"
+            key=key,
+            placeholder="Explica el procedimiento y usa $$ $$ para ecuaciones"
         )
-        
+
+        # Vista previa
         if new_answer.strip():
-            st.markdown("#### 👀 Vista previa de la respuesta")
+            st.markdown("#### 👀 Vista previa")
             st.markdown(new_answer, unsafe_allow_html=True)
 
-        if st.button("Responder", key=f"btn_ans_{question_id}"):
+        if st.button("Responder", key=f"btn_{question_id}"):
             if not new_answer.strip():
                 st.warning("La respuesta no puede estar vacía")
                 return
@@ -62,6 +64,8 @@ def answers_section(question_id: int):
             conn.commit()
             conn.close()
 
+            # 🔥 Reset del textbox de respuesta
+            st.session_state[key] = ""
             st.success("Respuesta agregada")
             st.rerun()
 
@@ -74,4 +78,3 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
-
