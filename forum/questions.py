@@ -1,6 +1,11 @@
 import streamlit as st
 from forum.db import get_conn
 
+def on_title_change():
+    st.session_state.title_ready = bool(
+        st.session_state.q_title.strip()
+    )
+
 def create_question():
     
     st.subheader("📝 Nueva pregunta")
@@ -8,11 +13,13 @@ def create_question():
     # Inicializar estado
     st.session_state.setdefault("q_title", "")
     st.session_state.setdefault("q_body", "")
+    st.session_state.title_ready = False
 
-    title = st.text_input(
-        "Título ",
+    st.text_input(
+        "Título",
         key="q_title",
-        placeholder="Ejemplo: Ejercicio 15.2 de Mecánica (Resnick)"
+        placeholder="Ejemplo: Ejercicio 15.2 de Mecánica (Resnick)",
+        on_change=on_title_change
     )
     col1, col2 = st.columns(2)
 
@@ -33,12 +40,7 @@ def create_question():
         if body.strip():
             st.markdown(body, unsafe_allow_html=True)
 
-    can_publish = bool(title.strip())
-
-    if not can_publish:
-        st.info("El título es obligatorio")
-
-    if st.button("📤 Publicar pregunta", disabled=not can_publish):
+    if st.button("📤 Publicar pregunta", disabled=not st.session_state.title_ready):
         conn = get_conn()
         c = conn.cursor()
         c.execute(
@@ -79,6 +81,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
