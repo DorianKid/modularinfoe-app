@@ -40,11 +40,10 @@ def create_question():
             st.markdown(body, unsafe_allow_html=True)
 
     c1,c2,c3 = st.columns([1,1,1])
-    with c2:
-        if st.button(
-            "📤 Publicar pregunta",
-            disabled=not st.session_state.title_ready
-        ):
+    with c3:
+        if st.button("📤 Publicar pregunta",
+                     disabled=not st.session_state.title_ready):
+                         
             conn = get_conn()
             c = conn.cursor()
             c.execute(
@@ -89,6 +88,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
