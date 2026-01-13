@@ -23,14 +23,17 @@ def create_question():
             "Pregunta (texto + LaTeX)",
             key="q_body",
             height=220,
-            placeholder="Ejemplo: Si el $$2^{6x} = 24$$ ¿cuánto vale x?"
+            placeholder="Ejemplo: $$\int 2^{6x}$$ "
         )
 
     with col2:
-        # --- Vista previa ---
-        if body.strip():
-            st.markdown("#### 👀 Vista previa")
-            st.markdown(body, unsafe_allow_html=True)
+        st.markdown("## 👀 Vista previa")
+        
+        c1, c2, c3 = st.columns([2,3,4])
+
+        with c2:
+            if body.strip():
+                st.markdown(body, unsafe_allow_html=True)
 
     can_publish = bool(title.strip())
 
@@ -78,5 +81,6 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
