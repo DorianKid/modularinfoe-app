@@ -83,7 +83,7 @@ def answers_section(question_id: int):
             if body.strip():
                 st.markdown(body, unsafe_allow_html=True)
     
-        c1,c2,c3 = st.columns([3,2,1])
+        c1,c2,c3 = st.columns([3,2,2])
         with c2:
             if st.button("Responder", key=f"btn_{question_id}"):
         
@@ -118,6 +118,7 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
 
 
 
