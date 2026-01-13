@@ -1,7 +1,6 @@
 import streamlit as st
 from forum.db import get_conn
 
-
 def answers_section(question_id: int):
 
     st.session_state.setdefault("voted_answers", set())
@@ -84,7 +83,7 @@ def answers_section(question_id: int):
             if body.strip():
                 st.markdown(body, unsafe_allow_html=True)
     
-        c1,c2,c3 = st.columns([1,1,3])
+        c1,c2,c3 = st.columns([1,2,3])
         with c3:
             if st.button("Responder", key=f"btn_{question_id}"):
         
@@ -110,8 +109,6 @@ def answers_section(question_id: int):
                 st.success("Respuesta agregada")
                 st.rerun()
 
-
-
 def vote(answer_id: int, field: str):
     conn = get_conn()
     c = conn.cursor()
@@ -121,6 +118,3 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
-
-
-
