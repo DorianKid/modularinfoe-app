@@ -23,20 +23,13 @@ def answers_section(question_id: int):
 
                     col1, col2, col3 = st.columns([2, 2, 6])
 
-                    st.markdown('<div class="vote-center">', unsafe_allow_html=True)
-                    
-                    col1, col2 = st.columns(2)
-                    
                     if col1.button(f"👍 {likes}", key=f"like_{aid}"):
                         vote(aid, "likes")
                         st.rerun()
-                    
+
                     if col2.button(f"👎 {dislikes}", key=f"dislike_{aid}"):
                         vote(aid, "dislikes")
                         st.rerun()
-                    
-                    st.markdown('</div>', unsafe_allow_html=True)
-
 
     else:
         st.caption("Aún no hay respuestas para esta pregunta.")
@@ -85,4 +78,3 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
-
