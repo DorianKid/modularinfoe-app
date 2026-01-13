@@ -39,7 +39,7 @@ def create_question():
         if body.strip():
             st.markdown(body, unsafe_allow_html=True)
 
-    c1,c2,c3 = st.columns([1,2,1])
+    c1,c2,c3 = st.columns(3)
     with c2:
         if st.button(
             "📤 Publicar pregunta",
@@ -89,6 +89,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
