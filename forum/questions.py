@@ -1,17 +1,17 @@
 import streamlit as st
 from forum.db import get_conn
 
-st.markdown("""
-<style>
-input[type="text"] {
-    font-size: 50px;
-    font-weight: bold;
-}
-</style>
-""", unsafe_allow_html=True)
-
 def create_question():
 
+    st.markdown("""
+    <style>
+    div[data-testid="stTextInput"][data-key="q_title"] input {
+        font-size: 22px;
+        font-weight: 700;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+    
     st.subheader("📝 Nueva pregunta")
 
     # Inicializar estado
@@ -86,6 +86,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
