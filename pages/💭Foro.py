@@ -1,12 +1,30 @@
 import streamlit as st
-from forum.db import get_conn
 
-st.write("Probando conexión a Supabase...")
+from forum.questions import create_question, list_questions
 
-try:
-    conn = get_conn()
-    st.success("✅ Conexión exitosa a PostgreSQL (Supabase)")
-    conn.close()
-except Exception as e:
-    st.error("❌ Error de conexión")
-    st.code(str(e))
+st.set_page_config(
+    page_title="Foro Académico",
+    layout="wide"
+)
+
+st.title("💭 Foro Académico")
+
+st.markdown(
+    """
+    Este foro funciona como un **repositorio académico de preguntas y soluciones**.
+
+    - Puedes escribir **texto normal y ecuaciones en LaTeX**
+    - Usa `$$ ... $$` para los entornos matemáticos
+    - Las respuestas pueden votarse según su utilidad
+    """
+)
+
+st.divider()
+
+# Crear nueva pregunta
+create_question()
+
+st.divider()
+
+# Listar preguntas existentes
+list_questions()
