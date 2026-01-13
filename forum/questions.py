@@ -6,7 +6,7 @@ def create_question():
     st.markdown("""
     <style>
     div[data-testid="stTextInput"][data-key="q_title"] input {
-        font-size: 22px;
+        font-size: 50px;
         font-weight: 700;
     }
     </style>
@@ -86,6 +86,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
