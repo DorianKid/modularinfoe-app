@@ -9,8 +9,10 @@ def create_question():
     st.session_state.setdefault("q_title", "")
     st.session_state.setdefault("q_body", "")
 
+    st.markdown("**Título**")
+    
     title = st.text_input(
-        "Título ",
+        "",
         key="q_title",
         placeholder="Ejemplo: Ejercicio 15.2 de Mecánica (Resnick)"
     )
@@ -20,9 +22,9 @@ def create_question():
     with col1:
     
         body = st.text_area(
-            "Pregunta (texto + LaTex)",
+            "Pregunta (LaTex)",
             key="q_body",
-            height=220,
+            height=180,
             placeholder="Ejemplo: $$\int 2^{6x}$$ \n ¿Por qué $$\sqrt{2}$$ es irracional?"
         )
 
@@ -78,6 +80,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
