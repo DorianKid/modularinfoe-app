@@ -4,7 +4,7 @@ from forum.db import get_conn
 st.markdown("""
 <style>
 input[type="text"] {
-    font-size: 20px;
+    font-size: 50px;
     font-weight: bold;
 }
 </style>
@@ -86,6 +86,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
