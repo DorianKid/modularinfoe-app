@@ -15,17 +15,22 @@ def create_question():
         placeholder="Ejercicio 15.2 de Mecánica (Resnick)"
     )
 
-    body = st.text_area(
-        "Pregunta (texto + LaTeX)",
-        key="q_body",
-        height=220,
-        placeholder="Ejemplo: Si el $$2^{6x} = 24$$ ¿cuánto vale x?"
-    )
+    col1, col2 = st.columns(2)
 
-    # --- Vista previa ---
-    if body.strip():
-        st.markdown("#### 👀 Vista previa")
-        st.markdown(body, unsafe_allow_html=True)
+    with col1:
+    
+        body = st.text_area(
+            "Pregunta (texto + LaTeX)",
+            key="q_body",
+            height=220,
+            placeholder="Ejemplo: Si el $$2^{6x} = 24$$ ¿cuánto vale x?"
+        )
+
+    with col2:
+        # --- Vista previa ---
+        if body.strip():
+            st.markdown("#### 👀 Vista previa")
+            st.markdown(body, unsafe_allow_html=True)
 
     can_publish = bool(title.strip())
 
@@ -73,4 +78,5 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
