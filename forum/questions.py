@@ -13,14 +13,16 @@ def create_question():
         "Pregunta (texto + LaTeX)",
         height=220,
         placeholder=(
-            "Escribe tu pregunta usando texto normal.\n\n"
-            "Para ecuaciones usa $$ ... $$\n\n"
             "Ejemplo:\n"
-            "¿Cuál es la solución del sistema\n"
-            "$$ m\\ddot{x} + kx = 0 $$\n"
-            "y su aceleración?"
+            "Si $$2^{6x} = 24$$ ¿cuánto vale x?"
         )
     )
+    
+    # --- PREVIEW ---
+    if body.strip():
+        st.markdown("#### 👀 Vista previa")
+        st.markdown(body, unsafe_allow_html=True)
+
 
     # Validación fuerte
     can_publish = bool(title.strip())
@@ -64,4 +66,5 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
