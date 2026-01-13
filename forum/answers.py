@@ -41,8 +41,12 @@ def answers_section(question_id: int):
         new_answer = st.text_area(
             "Respuesta (texto + LaTeX)",
             key=f"ans_{question_id}",
-            placeholder="Explica el procedimiento y usa $$ $$ para ecuaciones"
+            placeholder="Usa $$ ... $$ para ecuaciones"
         )
+        
+        if new_answer.strip():
+            st.markdown("#### 👀 Vista previa de la respuesta")
+            st.markdown(new_answer, unsafe_allow_html=True)
 
         if st.button("Responder", key=f"btn_ans_{question_id}"):
             if not new_answer.strip():
@@ -70,3 +74,4 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
