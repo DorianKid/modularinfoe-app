@@ -3,21 +3,20 @@ from forum.db import get_conn
 
 def answers_section(question_id: int):
 
-    with st.expander("💡 Ver respuestas / agregar solución"):
+    conn = get_conn()
+    c = conn.cursor()
+    c.execute("""
+        SELECT id, body, likes, dislikes
+        FROM answers
+        WHERE question_id = %s
+        ORDER BY likes DESC
+    """, (question_id,))
+    answers = c.fetchall()
+    conn.close()
 
-        # --- listar respuestas ---
-        conn = get_conn()
-        c = conn.cursor()
-        c.execute("""
-            SELECT id, body, likes, dislikes
-            FROM answers
-            WHERE question_id = %s
-            ORDER BY likes DESC
-        """, (question_id,))
-        answers = c.fetchall()
-        conn.close()
-
-        if answers:
+    # --- Si hay respuestas, mostrarlas en expander ---
+    if answers:
+        with st.expander(f"💡 Ver respuestas ({len(answers)})"):
             for aid, body, likes, dislikes in answers:
                 with st.container(border=True):
                     st.markdown(body, unsafe_allow_html=True)
@@ -34,12 +33,11 @@ def answers_section(question_id: int):
 
                     col3.markdown(f"👍 {likes} | 👎 {dislikes}")
 
-        else:
-            st.info("Aún no hay respuestas")
+    else:
+        st.caption("Aún no hay respuestas para esta pregunta.")
 
-        # --- agregar respuesta ---
-        st.markdown("#### ✍️ Agregar respuesta")
-
+    # --- Siempre permitir agregar respuesta ---
+    with st.expander("✍️ Agregar solución"):
         new_answer = st.text_area(
             "Respuesta (texto + LaTeX)",
             key=f"ans_{question_id}",
@@ -59,6 +57,7 @@ def answers_section(question_id: int):
             )
             conn.commit()
             conn.close()
+
             st.success("Respuesta agregada")
             st.rerun()
 
@@ -71,4 +70,3 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
-
