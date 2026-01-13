@@ -1,5 +1,9 @@
 import streamlit as st
 from forum.questions import create_question, list_questions
+from forum.admin import set_admin
+
+st.toggle("🛡️ Modo administrador", key="admin")
+set_admin(st.session_state["admin"])
 
 st.markdown("""
 <style>
