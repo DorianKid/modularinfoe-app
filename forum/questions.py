@@ -27,7 +27,7 @@ def create_question():
         )
 
     with col2:
-        st.markdown("## 👀 Vista previa")
+        st.markdown("#### 👀 Vista previa")
     
         if body.strip():
             st.markdown(body, unsafe_allow_html=True)
@@ -78,6 +78,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
