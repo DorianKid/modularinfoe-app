@@ -21,7 +21,7 @@ def answers_section(question_id: int):
                 with st.container(border=True):
                     st.markdown(body, unsafe_allow_html=True)
 
-                    left, center, right = st.columns([4, 3, 3])
+                    left, center, right = st.columns([4, 3, 2])
                     
                     with center:
                         c1, c2 = st.columns(2)
@@ -82,6 +82,7 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
 
 
 
