@@ -1,6 +1,15 @@
 import streamlit as st
-
 from forum.questions import create_question, list_questions
+
+st.markdown("""
+<style>
+.vote-center {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+</style>
+""", unsafe_allow_html=True)
 
 st.set_page_config(
     page_title="Foro Académico",
