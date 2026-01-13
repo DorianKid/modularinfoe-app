@@ -86,28 +86,30 @@ def answers_section(question_id: int):
     
         c1,c2,c3 = st.columns([1,1,3])
         with c3:
-    
             if st.button("Responder", key=f"btn_{question_id}"):
+        
                 if not new_answer.strip():
                     st.warning("La respuesta no puede estar vacía")
                     return
+        
+                conn = get_conn()
+                c = conn.cursor()
+                c.execute(
+                    """
+                    INSERT INTO answers (question_id, body)
+                    VALUES (%s, %s)
+                    """,
+                    (question_id, new_answer.strip())
+                )
+                conn.commit()
+                conn.close()
+        
+                # Reset seguro
+                st.session_state.pop(key, None)
+        
+                st.success("Respuesta agregada")
+                st.rerun()
 
-            conn = get_conn()
-            c = conn.cursor()
-            c.execute(
-                """
-                INSERT INTO answers (question_id, body)
-                VALUES (%s, %s)
-                """,
-                (question_id, new_answer.strip())
-            )
-            conn.commit()
-            conn.close()
-
-            # Reset
-            del st.session_state[key]
-            st.success("Respuesta agregada")
-            st.rerun()
 
 
 def vote(answer_id: int, field: str):
@@ -119,5 +121,6 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
 
 
