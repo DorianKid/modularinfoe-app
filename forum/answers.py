@@ -1,6 +1,62 @@
 import streamlit as st
 from forum.db import get_conn
 
+st.markdown("""
+<style>
+
+/* Contenedor de votos */
+.vote-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+/* Grupo de botones */
+.vote-inner {
+    display: flex;
+    gap: 0.4rem;
+    background: #f6f7f9;
+    padding: 0.3rem 0.5rem;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px #e0e0e0;
+}
+
+/* Botones base */
+.vote-inner div[data-testid="stButton"] > button {
+    border-radius: 999px;
+    padding: 0.15rem 0.6rem;
+    font-size: 0.8rem;
+    line-height: 1.4;
+    min-height: unset;
+    border: none;
+    background: white;
+    box-shadow: 0 0 0 1px #ddd;
+    transition: all 0.15s ease-in-out;
+}
+
+/* Hover */
+.vote-inner div[data-testid="stButton"] > button:hover {
+    background: #eef2ff;
+    box-shadow: 0 0 0 1px #c7d2fe;
+}
+
+/* Disabled */
+.vote-inner div[data-testid="stButton"] > button:disabled {
+    background: #f1f1f1;
+    color: #999;
+    box-shadow: none;
+}
+
+/* Ajuste columnas internas */
+.vote-inner .stColumn {
+    padding: 0 !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+
+
 def answers_section(question_id: int):
 
     st.session_state.setdefault("voted_answers", set())
@@ -39,9 +95,12 @@ def answers_section(question_id: int):
                     # --- Votos centrados ---
                     left, center, right = st.columns([3, 4, 3])
                     with center:
+                        # --- Votos centrados y estilizados ---
+                        st.markdown("<div class='vote-box'><div class='vote-inner'>", unsafe_allow_html=True)
+                        
                         c1, c2 = st.columns(2)
-
-                        # Like
+                        
+                        # 👍 Like
                         if aid in st.session_state.voted_answers:
                             c1.button(f"👍 {likes}", disabled=True, key=f"l_{aid}")
                         else:
@@ -49,8 +108,8 @@ def answers_section(question_id: int):
                                 vote(aid, "likes")
                                 st.session_state.voted_answers.add(aid)
                                 st.rerun()
-
-                        # Dislike
+                        
+                        # 👎 Dislike
                         if aid in st.session_state.voted_answers:
                             c2.button(f"👎 {dislikes}", disabled=True, key=f"d_{aid}")
                         else:
@@ -58,6 +117,9 @@ def answers_section(question_id: int):
                                 vote(aid, "dislikes")
                                 st.session_state.voted_answers.add(aid)
                                 st.rerun()
+                        
+                        st.markdown("</div></div>", unsafe_allow_html=True)
+
 
     else:
         st.caption("Aún no hay respuestas para esta pregunta.")
@@ -118,10 +180,3 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
-
-
-
-
-
-
-
