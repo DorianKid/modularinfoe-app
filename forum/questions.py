@@ -1,15 +1,6 @@
 import streamlit as st
 from forum.db import get_conn
 
-st.markdown("""
-<style>
-div[data-testid="stButton"] {
-    display: flex;
-    justify-content: center;
-}
-</style>
-""", unsafe_allow_html=True)
-
 def on_title_change():
     st.session_state.title_ready = bool(
         st.session_state.q_title.strip()
@@ -50,6 +41,15 @@ def create_question():
 
 #    c1,c2,c3 = st.columns([1,1,3])
 #    with c3:
+    
+    st.markdown("""
+    <style>
+    div[data-testid="stButton"] {
+        display: flex;
+        justify-content: center;
+    }
+    </style>
+    """, unsafe_allow_html=True)
     if st.button("📤 Publicar pregunta",
                  disabled=not st.session_state.title_ready):
                      
@@ -97,6 +97,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
