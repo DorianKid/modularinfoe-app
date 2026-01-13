@@ -9,7 +9,10 @@ def create_question():
     st.session_state.setdefault("q_title", "")
     st.session_state.setdefault("q_body", "")
 
-    st.markdown("**Título**")
+    st.markdown(
+        "<b>Título</b>",
+        unsafe_allow_html=True
+    )
     
     title = st.text_input(
         "",
@@ -80,6 +83,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
