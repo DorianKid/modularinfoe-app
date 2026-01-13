@@ -1,12 +1,11 @@
 import streamlit as st
 from forum.db import get_conn
 
-def on_title_change():
-    st.session_state.title_ready = bool(
-        st.session_state.q_title.strip()
-    )
-
 def create_question():
+    def on_title_change():
+        st.session_state.title_ready = bool(
+            st.session_state.q_title.strip()
+        )
     
     st.subheader("📝 Nueva pregunta")
 
@@ -15,6 +14,7 @@ def create_question():
     st.session_state.setdefault("q_body", "")
     if "title_ready" not in st.session_state:
         st.session_state.title_ready = False
+        
     st.text_input(
         "Título",
         key="q_title",
@@ -81,6 +81,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
