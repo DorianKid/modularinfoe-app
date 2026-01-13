@@ -68,21 +68,29 @@ def answers_section(question_id: int):
         key = f"ans_{question_id}"
         st.session_state.setdefault(key, "")
 
-        new_answer = st.text_area(
-            "Respuesta (texto + LaTeX)",
-            key=key,
-            placeholder="Explica el procedimiento y usa $$ $$ para ecuaciones"
-        )
+        col1, col2 = st.columns(2)
+        with col1:
+            new_answer = st.text_area(
+                "Respuesta (LaTeX)",
+                key=key,
+                placeholder="Explica el procedimiento y usa $$ $$ para ecuaciones"
+            )
 
-        # Vista previa
-        if new_answer.strip():
-            st.markdown("#### 👀 Vista previa")
-            st.markdown(new_answer, unsafe_allow_html=True)
-
-        if st.button("Responder", key=f"btn_{question_id}"):
-            if not new_answer.strip():
-                st.warning("La respuesta no puede estar vacía")
-                return
+        with col2:
+            st.markdown(
+                "<h4 style='text-align: center;'>👀 Vista previa</h4>",
+                unsafe_allow_html=True
+            )
+            if body.strip():
+                st.markdown(body, unsafe_allow_html=True)
+    
+        c1,c2,c3 = st.columns([1,1,3])
+        with c3:
+    
+            if st.button("Responder", key=f"btn_{question_id}"):
+                if not new_answer.strip():
+                    st.warning("La respuesta no puede estar vacía")
+                    return
 
             conn = get_conn()
             c = conn.cursor()
@@ -111,4 +119,5 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
 
