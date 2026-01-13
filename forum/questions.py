@@ -2,15 +2,6 @@ import streamlit as st
 from forum.db import get_conn
 
 def create_question():
-
-    st.markdown("""
-    <style>
-    div[data-testid="stTextInput"][data-key="q_title"] input {
-        font-size: 50px;
-        font-weight: 700;
-    }
-    </style>
-    """, unsafe_allow_html=True)
     
     st.subheader("📝 Nueva pregunta")
 
@@ -31,7 +22,7 @@ def create_question():
             "Pregunta (LaTex)",
             key="q_body",
             height=180,
-            placeholder="Ejemplo: $$\int 2^{6x}$$ \n ¿Por qué $$\sqrt{2}$$ es irracional?"
+            placeholder="Ejemplo: $$\int 2^{6x}$$ \n\n Ejemplo: ¿Por qué $$\sqrt{2}$$ es irracional?"
         )
 
     with col2:
@@ -86,6 +77,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
