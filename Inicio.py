@@ -1,6 +1,7 @@
 import streamlit as st
 import base64
 from streamlit_pdf_viewer import pdf_viewer
+from forum.admin_page import admin_page
 
 query_params = st.query_params
 
