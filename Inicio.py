@@ -2,6 +2,13 @@ import streamlit as st
 import base64
 from streamlit_pdf_viewer import pdf_viewer
 
+query_params = st.query_params
+
+if query_params.get("admin") == "true":
+    admin_page()
+else:
+    st.write("Bienvenido al portal académico")
+
 st.set_page_config(
     page_title="Modulares",
     page_icon=":pencil:",
