@@ -13,8 +13,8 @@ def create_question():
     # Inicializar estado
     st.session_state.setdefault("q_title", "")
     st.session_state.setdefault("q_body", "")
-    st.session_state.title_ready = False
-
+    if "title_ready" not in st.session_state:
+        st.session_state.title_ready = False
     st.text_input(
         "Título",
         key="q_title",
@@ -81,6 +81,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
