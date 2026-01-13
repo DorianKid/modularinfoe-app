@@ -19,20 +19,21 @@ def answers_section(question_id: int):
         with st.expander(f"💡 Ver respuestas ({len(answers)})"):
             for aid, body, likes, dislikes in answers:
                 with st.container(border=True):
-                    st.markdown(body, unsafe_allow_html=True)
 
-                    left, center, right = st.columns([3, 4, 3])
+                    st.markdown('<div class="vote-center">', unsafe_allow_html=True)
                     
-                    with center:
-                        c1, c2 = st.columns(2)
+                    col1, col2 = st.columns(2)
                     
-                        if c1.button(f"👍 {likes}", key=f"like_{aid}"):
-                            vote(aid, "likes")
-                            st.rerun()
+                    if col1.button(f"👍 {likes}", key=f"like_{aid}"):
+                        vote(aid, "likes")
+                        st.rerun()
                     
-                        if c2.button(f"👎 {dislikes}", key=f"dislike_{aid}"):
-                            vote(aid, "dislikes")
-                            st.rerun()
+                    if col2.button(f"👎 {dislikes}", key=f"dislike_{aid}"):
+                        vote(aid, "dislikes")
+                        st.rerun()
+                    
+                    st.markdown('</div>', unsafe_allow_html=True)
+
 
     else:
         st.caption("Aún no hay respuestas para esta pregunta.")
@@ -81,3 +82,4 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
