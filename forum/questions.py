@@ -10,9 +10,9 @@ def create_question():
     st.session_state.setdefault("q_body", "")
 
     title = st.text_input(
-        "Título *",
+        "Título ",
         key="q_title",
-        placeholder="Ejercicio 15.2 de Mecánica (Resnick)"
+        placeholder="Ejemplo: Ejercicio 15.2 de Mecánica (Resnick)"
     )
 
     col1, col2 = st.columns(2)
@@ -20,7 +20,7 @@ def create_question():
     with col1:
     
         body = st.text_area(
-            "Pregunta (texto + LaTeX)",
+            "Pregunta (texto + LaTex)",
             key="q_body",
             height=220,
             placeholder="Ejemplo: $$\int 2^{6x}$$ "
@@ -81,6 +81,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
