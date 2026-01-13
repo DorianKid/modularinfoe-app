@@ -1,11 +1,12 @@
 import streamlit as st
-from forum.questions import create_question
-from forum.questions import list_questions
+from forum.db import get_conn
 
-st.set_page_config(page_title="Foro", layout="wide")
+st.write("Probando conexión a Supabase...")
 
-st.title("💬 Foro Académico")
-
-create_question()
-st.divider()
-list_questions()
+try:
+    conn = get_conn()
+    st.success("✅ Conexión exitosa a PostgreSQL (Supabase)")
+    conn.close()
+except Exception as e:
+    st.error("❌ Error de conexión")
+    st.code(str(e))
