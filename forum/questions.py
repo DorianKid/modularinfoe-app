@@ -1,6 +1,15 @@
 import streamlit as st
 from forum.db import get_conn
 
+st.markdown("""
+<style>
+input[type="text"] {
+    font-size: 20px;
+    font-weight: bold;
+}
+</style>
+""", unsafe_allow_html=True)
+
 def create_question():
 
     st.subheader("📝 Nueva pregunta")
@@ -9,16 +18,11 @@ def create_question():
     st.session_state.setdefault("q_title", "")
     st.session_state.setdefault("q_body", "")
 
-    st.markdown(
-        "<b>Título</b>",
-        unsafe_allow_html=True
-    )
-    
     title = st.text_input(
+        "Título ",
         key="q_title",
         placeholder="Ejemplo: Ejercicio 15.2 de Mecánica (Resnick)"
     )
-
     col1, col2 = st.columns(2)
 
     with col1:
@@ -82,6 +86,7 @@ def list_questions():
 
             from forum.answers import answers_section
             answers_section(qid)
+
 
 
 
