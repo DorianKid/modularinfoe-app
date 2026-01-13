@@ -21,15 +21,18 @@ def answers_section(question_id: int):
                 with st.container(border=True):
                     st.markdown(body, unsafe_allow_html=True)
 
-                    col1, col2, col3 = st.columns([2, 2, 6])
-
-                    if col1.button(f"👍 {likes}", key=f"like_{aid}"):
-                        vote(aid, "likes")
-                        st.rerun()
-
-                    if col2.button(f"👎 {dislikes}", key=f"dislike_{aid}"):
-                        vote(aid, "dislikes")
-                        st.rerun()
+                    left, center, right = st.columns([3, 4, 3])
+                    
+                    with center:
+                        c1, c2 = st.columns(2)
+                    
+                        if c1.button(f"👍 {likes}", key=f"like_{aid}"):
+                            vote(aid, "likes")
+                            st.rerun()
+                    
+                        if c2.button(f"👎 {dislikes}", key=f"dislike_{aid}"):
+                            vote(aid, "dislikes")
+                            st.rerun()
 
     else:
         st.caption("Aún no hay respuestas para esta pregunta.")
