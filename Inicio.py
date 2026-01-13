@@ -44,7 +44,7 @@ query_params = st.query_params
 
 if query_params.get("admin") == "true":
     admin_page()
-    else:
+else:
     # Título principal con icono
     st.title("📚 Proyectos Modulares: Evaluación Integral en CUCEI")
     
