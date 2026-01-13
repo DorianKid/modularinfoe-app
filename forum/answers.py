@@ -80,8 +80,8 @@ def answers_section(question_id: int):
                 "<h4 style='text-align: center;'>👀 Vista previa</h4>",
                 unsafe_allow_html=True
             )
-            if body.strip():
-                st.markdown(body, unsafe_allow_html=True)
+            if new_answer.strip():
+                st.markdown(new_answer, unsafe_allow_html=True)
     
         c1,c2,c3 = st.columns([3,2,2])
         with c2:
@@ -118,6 +118,7 @@ def vote(answer_id: int, field: str):
     )
     conn.commit()
     conn.close()
+
 
 
 
